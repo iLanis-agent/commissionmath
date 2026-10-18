@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commission Math - commission arithmetic</title>
+<style>
+  :root { --accent:#5a6b1f; --ink:#1c2008; --paper:#f6f8ec; --soft:#e6ecca; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Georgia, "Times New Roman", serif; background:var(--paper); color:var(--ink); line-height:1.55; }
+  main { max-width:660px; margin:0 auto; }
+  .boundary { background:#fdeaea; border-left:6px solid #b03030; color:#5c1c1c; border-radius:6px; padding:1rem 1.1rem; }
+  .boundary strong { display:block; margin-bottom:.3rem; }
+  body { padding:2.5rem 1.2rem; }
+  h1 { font-size:2.2rem; color:var(--accent); }
+  p.lede { font-size:1.12rem; margin:.9rem 0 1.6rem; }
+  .boundary { margin-bottom:1.6rem; }
+  section { background:var(--soft); border-left:5px solid var(--accent); border-radius:6px; padding:1.1rem 1.2rem; margin-bottom:1.2rem; }
+  h2 { font-size:1.18rem; margin-bottom:.5rem; }
+  section p { font-size:.98rem; }
+  a.btn { display:inline-block; margin-top:1.4rem; background:var(--accent); color:#fff; text-decoration:none; padding:.8rem 1.6rem; border-radius:999px; font-size:1.05rem; }
+  footer { margin-top:2.2rem; font-size:.85rem; color:#6b7340; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Commission Math</h1>
+  <p class="lede">A tier rate applies to the slice, not the whole.</p>
+  <div class="boundary">
+    <strong>Boundary: arithmetic only</strong>
+    Commission Math works out commission from the sales and rates you type. It does not know your plan's real terms, such as caps, accelerators, clawbacks or how sales are counted. Check those in your commission agreement.
+  </div>
+  <section>
+    <h2>The flat truth</h2>
+    <p>Commission on 50,000.00 of sales at 5%: 2,500.00.</p>
+  </section>
+  <section>
+    <h2>The tier truth</h2>
+    <p>3% on the first 50,000.00 is 1,500.00; 5% on the other 10,000.00 is 500.00; total 2,000.00. The higher rate only touches the sales above the threshold.</p>
+  </section>
+  <section>
+    <h2>The target truth</h2>
+    <p>To earn 2,500.00 at 5%, sales of 50,000.00 are needed.</p>
+  </section>
+  <a class="btn" href="app.html">Run your numbers</a>
+  <footer>Commission Math is exact arithmetic over the numbers you enter, nothing more.</footer>
+</main>
+</body>
+</html>
