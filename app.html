@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Commission Math - app</title>
+<style>
+  :root { --accent:#5a6b1f; --ink:#1c2008; --paper:#f6f8ec; --soft:#e6ecca; }
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Georgia, "Times New Roman", serif; background:var(--paper); color:var(--ink); line-height:1.55; }
+  main { max-width:660px; margin:0 auto; }
+  .boundary { background:#fdeaea; border-left:6px solid #b03030; color:#5c1c1c; border-radius:6px; padding:1rem 1.1rem; }
+  .boundary strong { display:block; margin-bottom:.3rem; }
+  body { padding:2rem 1.2rem; }
+  h1 { font-size:1.8rem; color:var(--accent); }
+  .boundary { margin:1rem 0 1.4rem; }
+  .panel { background:var(--soft); border-left:5px solid var(--accent); border-radius:6px; padding:1rem 1.1rem; margin-bottom:1.1rem; }
+  h2 { font-size:1.1rem; margin-bottom:.6rem; }
+  p.note { font-size:.9rem; margin-bottom:.4rem; }
+  label { display:block; font-size:.9rem; margin:.45rem 0 .1rem; }
+  input, select { width:100%; padding:.45rem .55rem; font-size:1rem; border:1px solid #c8d49a; border-radius:6px; background:#fff; color:var(--ink); }
+  .row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.6rem; }
+  .row2 { display:grid; grid-template-columns:1fr 1fr; gap:.6rem; }
+  .out { margin-top:.7rem; font-size:.98rem; background:#fff; border:1px dashed #c8d49a; border-radius:6px; padding:.6rem .7rem; min-height:2.4rem; }
+  .out.err { border-color:#b03030; color:#8a1f1f; }
+  footer { margin-top:1.8rem; font-size:.85rem; color:#6b7340; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Commission Math</h1>
+  <div class="boundary">
+    <strong>Boundary: arithmetic only</strong>
+    This page works out commission from the sales and rates you type. It does not know your plan's real terms, such as caps, accelerators, clawbacks or how sales are counted. Check those in your commission agreement.
+  </div>
+
+  <div class="panel">
+    <h2>The flat truth</h2>
+    <p class="note">One rate on all the sales.</p>
+    <div class="row2">
+      <div><label for="a-s">Sales</label><input id="a-s" type="number" step="any" value="50000"></div>
+      <div><label for="a-r">Rate (%)</label><input id="a-r" type="number" step="any" value="5"></div>
+    </div>
+    <div class="out" id="a-out"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The tier truth</h2>
+    <p class="note">One rate up to a threshold, another rate on the sales above it.</p>
+    <div class="row2">
+      <div><label for="t-s">Sales</label><input id="t-s" type="number" step="any" value="60000"></div>
+      <div><label for="t-t">Threshold</label><input id="t-t" type="number" step="any" value="50000"></div>
+      <div><label for="t-l">Rate up to it (%)</label><input id="t-l" type="number" step="any" value="3"></div>
+      <div><label for="t-h">Rate above it (%)</label><input id="t-h" type="number" step="any" value="5"></div>
+    </div>
+    <div class="out" id="t-out"></div>
+  </div>
+
+  <div class="panel">
+    <h2>The target truth</h2>
+    <p class="note">The least sales that earn a target commission at one rate.</p>
+    <div class="row2">
+      <div><label for="g-g">Target commission</label><input id="g-g" type="number" step="any" value="2500"></div>
+      <div><label for="g-r">Rate (%)</label><input id="g-r" type="number" step="any" value="5"></div>
+    </div>
+    <div class="out" id="g-out"></div>
+  </div>
+
+  <footer>Commission Math is exact arithmetic over the numbers you enter. <a href="index.html">Why it exists</a>.</footer>
+</main>
+<script src="engine.js"></script>
+<script>
+  const num = (id) => Number(document.getElementById(id).value);
+  function show(id, fn) {
+    const out = document.getElementById(id);
+    try { out.textContent = fn(); out.classList.remove("err"); }
+    catch (e) { out.textContent = e.message; out.classList.add("err"); }
+  }
+  function recalc() {
+    show("a-out", () => flatTruth(num("a-s"), num("a-r")));
+    show("t-out", () => tierTruth(num("t-s"), num("t-t"), num("t-l"), num("t-h")));
+    show("g-out", () => targetTruth(num("g-g"), num("g-r")));
+  }
+  document.querySelectorAll("input, select").forEach((el) => {
+    el.addEventListener("input", recalc);
+    el.addEventListener("change", recalc);
+  });
+  recalc();
+</script>
+</body>
+</html>
